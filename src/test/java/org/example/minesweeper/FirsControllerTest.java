@@ -26,31 +26,7 @@ public class FirsControllerTest {
 
     @Autowired
     private MockMvc mvc;
-//    @Test
-//    public void whenWidthIsValid() throws Exception {
-//        mvc.perform(MockMvcRequestBuilders
-//                        .post("/api/new")
-//                        .content(new NewGameRequest(10, 10, 10).toString())
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk());
-//    }
-//
 
-//    @Test
-//    public void whenWidthIsInvalid_thenThrowBindException() throws Exception {
-////        String requestBody = new NewGameRequest(1, 10, 10).toString();
-//        mvc.perform(MockMvcRequestBuilders
-//                        .post("/api/new")
-//                        .param("width", "1")
-//                        .param("height", "10")
-//                        .param("mines", "10")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().is4xxClientError())
-//                .andExpect(MockMvcResultMatchers.content().string("error: ширина поля должна быть не менее 2 и не более 30"));
-//    }
-//
     @Test
     public void whenWidthIsInvalid_thenThrowBindException2() throws Exception {
         NewGameRequest newGameRequest = new NewGameRequest(1, 10, 10);
@@ -65,17 +41,35 @@ public class FirsControllerTest {
                 .andExpect(status().is4xxClientError())
 .andExpect(MockMvcResultMatchers.content().string("error: ширина поля должна быть не менее 2 и не более 30"));
     }
+    @Test
+    public void whenHeightIsInvalid_thenThrowBindException2() throws Exception {
+        NewGameRequest newGameRequest = new NewGameRequest(10, 1, 10);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestBody = objectMapper.writeValueAsString(newGameRequest);
+        System.out.println(requestBody);
+        mvc.perform(MockMvcRequestBuilders
+                        .post("/api/new")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError())
+                .andExpect(MockMvcResultMatchers.content().string("error: высота поля должна быть не менее 2 и не более 30"));
+    }
+    @Test
+    public void whenMinesIsInvalid_thenThrowBindException2() throws Exception {
+        NewGameRequest newGameRequest = new NewGameRequest(10, 10, 100);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestBody = objectMapper.writeValueAsString(newGameRequest);
+        System.out.println(requestBody);
+        mvc.perform(MockMvcRequestBuilders
+                        .post("/api/new")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError())
+                .andExpect(MockMvcResultMatchers.content().string("error: количество мин должно быть не менее 1 и не более 99"));
+    }
 
-
-
-//    @Test
-//    public void whenHeightIsInvalid_thenThrowBindException() throws Exception {
-//        mvc.perform(post("/api/new")
-//                        .param("width", "10") // Корректное значение ширины
-//                        .param("height", "1")) // Используем некорректное значение высоты
-//                .andExpect(status().isOk()) // Проверяем, что статус ответа - OK
-//                .andExpect(content().string("error: высота поля должна быть не менее 2 и не более 30"));
-//    }
 }
 
 
