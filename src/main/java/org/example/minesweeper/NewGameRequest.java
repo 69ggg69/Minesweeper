@@ -1,7 +1,6 @@
 package org.example.minesweeper;
 
-import jakarta.validation.constraints.Size;
-import org.springframework.beans.factory.annotation.Value;
+import com.fasterxml.jackson.annotation.JsonTypeId;
 
 public class NewGameRequest {
     NewGameRequest newGameRequest;
@@ -11,9 +10,11 @@ public class NewGameRequest {
         this.mines_count = mines_count;
     }
 
+
     private int width;
     private int height;
     private int mines_count;
+
 
     public int getWidth() {
         return width;

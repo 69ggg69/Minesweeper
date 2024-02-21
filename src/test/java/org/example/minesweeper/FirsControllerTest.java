@@ -5,19 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.validation.BindException;
-
-import static org.junit.Assert.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ExtendWith(SpringExtension.class)
@@ -30,11 +23,13 @@ public class FirsControllerTest {
     @Test
     public void whenWidthIsInvalid_thenThrowBindException2() throws Exception {
         NewGameRequest newGameRequest = new NewGameRequest(1, 10, 10);
+        GameInfoResponse gameInfoResponse = new GameInfoResponse(newGameRequest);
         ObjectMapper objectMapper = new ObjectMapper();
-        String requestBody = objectMapper.writeValueAsString(newGameRequest);
+        String requestBody = objectMapper.writeValueAsString(gameInfoResponse);
+        System.out.println(requestBody);
         System.out.println(requestBody);
         mvc.perform(MockMvcRequestBuilders
-                        .post("/api/new")
+                        .post("/api")
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -48,7 +43,7 @@ public class FirsControllerTest {
         String requestBody = objectMapper.writeValueAsString(newGameRequest);
         System.out.println(requestBody);
         mvc.perform(MockMvcRequestBuilders
-                        .post("/api/new")
+                        .post("/api")
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -62,7 +57,7 @@ public class FirsControllerTest {
         String requestBody = objectMapper.writeValueAsString(newGameRequest);
         System.out.println(requestBody);
         mvc.perform(MockMvcRequestBuilders
-                        .post("/api/new")
+                        .post("/api")
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
