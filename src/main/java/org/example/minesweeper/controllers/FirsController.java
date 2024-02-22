@@ -1,13 +1,13 @@
 package org.example.minesweeper.controllers;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.minesweeper.GameInfoResponse;
-import org.springframework.boot.jackson.JsonObjectDeserializer;
+import org.example.minesweeper.createTable.GameInfoResponse;
+import org.example.minesweeper.dto.GameInfoData;
+import org.example.minesweeper.services.GameInfoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.example.minesweeper.NewGameRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -17,9 +17,12 @@ import java.nio.charset.StandardCharsets;
 @Controller
 @RequestMapping()
 public class FirsController {
+    @Resource(name = "gameInfoService")
+    private GameInfoService gameInfoService;
+
+
     @PostMapping("/api")
         public ResponseEntity<GameInfoResponse> newGameRequest(@RequestBody NewGameRequest newGameRequest) throws BindException {
-
             int width = newGameRequest.getWidth();
             if (width < 2 || width> 30) {
                 throw new BindException("ширина поля должна быть не менее 2 и не более 30");
@@ -33,9 +36,16 @@ public class FirsController {
             if (mines < 1 || mines > maxMines) {
                 throw new BindException("количество мин должно быть не менее 1 и не более " + (maxMines));
             }
-            GameInfoResponse gameInfoResponse = new GameInfoResponse(newGameRequest);
+            GameInfoData gameInfoData = new GameInfoData();
+            gameInfoData.setHeight(newGameRequest);
+            gameInfoData.setWidth(newGameRequest);
+            gameInfoData.setMines_count(newGameRequest);
+            gameInfoService.saveGameInfo(gameInfoData);
+            return new ResponseEntity<GameInfoResponse>(new GameInfoResponse(), HttpStatus.OK);
 
-            return new ResponseEntity<GameInfoResponse>(gameInfoResponse, HttpStatus.OK);
+//            GameInfoResponse gameInfoResponse = new GameInfoResponse(newGameRequest);
+
+//            return new ResponseEntity<GameInfoResponse>(gameInfoResponse, HttpStatus.OK);
           //  return new ResponseEntity<GameInfoResponse>(new GameInfoResponse(game_id, width, height, mines), HttpStatus.OK);
     }
     @GetMapping("/api/new")
