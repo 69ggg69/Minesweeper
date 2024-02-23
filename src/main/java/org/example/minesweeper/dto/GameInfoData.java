@@ -1,17 +1,17 @@
 package org.example.minesweeper.dto;
 
 public class GameInfoData {
-    private Long game_id;
+    private String game_id;
     private int width;
     private int height;
     private int mines_count;
     private boolean completed;
 
-    public Long getGame_id() {
+    public String getGame_id() {
         return game_id;
     }
 
-    public void setGame_id(Long game_id) {
+    public void setGame_id(String game_id) {
         this.game_id = game_id;
     }
 

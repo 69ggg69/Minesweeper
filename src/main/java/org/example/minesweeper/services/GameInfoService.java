@@ -4,6 +4,6 @@ import org.example.minesweeper.dto.GameInfoData;
 
 public interface GameInfoService {
     void saveGameInfo(GameInfoData gameInfoData);
-    GameInfoData getGameInfo(Long id);
-    boolean deleteGameInfo(Long id);
+    GameInfoData getGameInfo(String id);
+    boolean deleteGameInfo(String id);
 }

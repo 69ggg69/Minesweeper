@@ -1,12 +1,17 @@
 package org.example.minesweeper.createTable;
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "game_info")
 public class GameInfoResponse {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long game_id;
+    private String game_id;
+
+    public GameInfoResponse() {
+
+    }
     @Column
     private int width;
     @Column
@@ -15,14 +20,12 @@ public class GameInfoResponse {
     private int mines_count;
     @Column
     private boolean completed;
-    public GameInfoResponse() {
-    }
 
-    public Long getGame_id() {
+    public String getGame_id() {
         return game_id;
     }
 
-    public void setGame_id(Long game_id) {
+    public void setGame_id(String game_id) {
         this.game_id = game_id;
     }
 

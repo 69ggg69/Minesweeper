@@ -6,6 +6,8 @@ import org.example.minesweeper.dto.GameInfoData;
 import org.example.minesweeper.repositories.GameInfoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service("gameInfoService")
 public class DefaultGameInfoService implements GameInfoService {
     private final GameInfoRepository gameInfoRepository;
@@ -16,22 +18,20 @@ public class DefaultGameInfoService implements GameInfoService {
 
     @Override
     public void saveGameInfo(GameInfoData gameInfoData) {
-        // Создание объекта GameInfoResponse из объекта GameInfoData
         GameInfoResponse gameInfoResponse = new GameInfoResponse();
+        String uuid = UUID.randomUUID().toString().toUpperCase();
         gameInfoResponse.setWidth(gameInfoData.getWidth());
         gameInfoResponse.setHeight(gameInfoData.getHeight());
         gameInfoResponse.setMines_count(gameInfoData.getMines_count());
         gameInfoResponse.setCompleted(gameInfoData.isCompleted());
-
-        // Сохранение объекта GameInfoResponse в репозитории и обновление game_id в объекте GameInfoData
+        gameInfoResponse.setGame_id(uuid);
         gameInfoResponse = gameInfoRepository.save(gameInfoResponse);
         gameInfoData.setGame_id(gameInfoResponse.getGame_id());
     }
 
     @Override
-    public GameInfoData getGameInfo(Long game_id) {
-        // Получение объекта GameInfoResponse по game_id из репозитория
-        return gameInfoRepository.findById(game_id)
+    public GameInfoData getGameInfo(String game_id) {
+        return gameInfoRepository.findById(Long.valueOf(game_id))
                 .map(gameInfoResponse -> {
                     // Создание объекта GameInfoData из объекта GameInfoResponse и объекта NewGameRequest
                     GameInfoData gameInfoData = new GameInfoData();
@@ -46,10 +46,9 @@ public class DefaultGameInfoService implements GameInfoService {
     }
 
     @Override
-    public boolean deleteGameInfo(Long game_id) {
-        // Проверка наличия записи с заданным game_id в репозитории и удаление, если найден
-        if (gameInfoRepository.existsById(game_id)) {
-            gameInfoRepository.deleteById(game_id);
+    public boolean deleteGameInfo(String game_id) {
+        if (gameInfoRepository.existsById(Long.valueOf(game_id))) {
+            gameInfoRepository.deleteById(Long.valueOf(game_id));
             return true;
         }
         return false;
