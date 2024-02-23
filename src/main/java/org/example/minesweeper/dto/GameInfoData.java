@@ -1,7 +1,5 @@
 package org.example.minesweeper.dto;
 
-import org.example.minesweeper.NewGameRequest;
-
 public class GameInfoData {
     private Long game_id;
     private int width;
@@ -21,24 +19,24 @@ public class GameInfoData {
         return width;
     }
 
-    public void setWidth(NewGameRequest newGameRequest) {
-        this.width = newGameRequest.getWidth();
+    public void setWidth(int width) {
+        this.width = width;
     }
 
     public int getHeight() {
         return height;
     }
 
-    public void setHeight(NewGameRequest newGameRequest) {
-        this.height = newGameRequest.getHeight();
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public int getMines_count() {
         return mines_count;
     }
 
-    public void setMines_count(NewGameRequest newGameRequest) {
-        this.mines_count = newGameRequest.getMines_count();
+    public void setMines_count(int mines_count) {
+        this.mines_count = mines_count;
     }
 
     public boolean isCompleted() {

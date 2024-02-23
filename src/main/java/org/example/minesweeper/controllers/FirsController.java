@@ -6,7 +6,6 @@ import org.example.minesweeper.dto.GameInfoData;
 import org.example.minesweeper.services.GameInfoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.example.minesweeper.NewGameRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,20 +35,13 @@ public class FirsController {
             if (mines < 1 || mines > maxMines) {
                 throw new BindException("количество мин должно быть не менее 1 и не более " + (maxMines));
             }
-            GameInfoData gameInfoData = new GameInfoData();
-            gameInfoData.setHeight(newGameRequest);
-            gameInfoData.setWidth(newGameRequest);
-            gameInfoData.setMines_count(newGameRequest);
-            gameInfoService.saveGameInfo(gameInfoData);
-            return new ResponseEntity<GameInfoResponse>(new GameInfoResponse(), HttpStatus.OK);
+
 
 //            GameInfoResponse gameInfoResponse = new GameInfoResponse(newGameRequest);
 
 //            return new ResponseEntity<GameInfoResponse>(gameInfoResponse, HttpStatus.OK);
           //  return new ResponseEntity<GameInfoResponse>(new GameInfoResponse(game_id, width, height, mines), HttpStatus.OK);
     }
-    @GetMapping("/api/new")
-
 
 
 @ExceptionHandler(BindException.class)
