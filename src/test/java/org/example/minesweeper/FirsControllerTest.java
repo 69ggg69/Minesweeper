@@ -2,9 +2,12 @@ package org.example.minesweeper;
 
 import org.example.minesweeper.controllers.FirsController;
 import org.example.minesweeper.dto.GameInfoData;
+import org.example.minesweeper.services.DefaultGameInfoService;
 import org.example.minesweeper.services.GameInfoService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,28 +22,38 @@ import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@ExtendWith(SpringExtension.class)
 @WebMvcTest(FirsController.class)
 public class FirsControllerTest {
 
     @Autowired
     private MockMvc mvc;
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @MockBean
-    private GameInfoService gameInfoService;
+    private DefaultGameInfoService gameInfoService;
+
+    private ObjectMapper objectMapper;
+    @BeforeEach
+    void setUp() {
+        objectMapper = new ObjectMapper();
+    }
+
 
 
     @Test
     public void whenWidthIsInvalid_thenThrowBindException2() throws Exception {
-        NewGameRequest request = new NewGameRequest(10, 10, 10);
-        GameInfoData expectedResponse = new GameInfoData();
-        expectedResponse.setWidth(request);
-        expectedResponse.setHeight(request);
-        expectedResponse.setMines_count(request);
-        doNothing().when(gameInfoService).saveGameInfo(any());
-        System.out.println(expectedResponse);
+        GameInfoData gameInfoData = new GameInfoData();
+        gameInfoData.setWidth(10);
+        gameInfoData.setHeight(10);
+        gameInfoData.setMines_count(5);
+        gameInfoData.setCompleted(false);
+        // Устанавливаем ожидаемое поведение сервиса
+        Mockito.doNothing().when(gameInfoService).saveGameInfo(Mockito.any(GameInfoData.class));
+        System.out.println(objectMapper.writeValueAsString(gameInfoData));
+        // Отправляем POST-запрос с данными объекта GameInfoData и проверяем, что возвращается статус 201 CREATED
+        mvc.perform(MockMvcRequestBuilders.post("/api/new")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(gameInfoData)))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
 //        mvc.perform(MockMvcRequestBuilders.post("/api")
 //                        .contentType(MediaType.APPLICATION_JSON)
 //                        .content(objectMapper.writeValueAsString(request)))

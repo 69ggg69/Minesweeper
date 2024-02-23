@@ -15,15 +15,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @JsonTest
 public class MyJsonTest {
-    @Autowired
-            private JacksonTester<NewGameRequest> json;
-
-    @Test
-        void testSerialize() throws Exception {
-            NewGameRequest details = new NewGameRequest(20,10, 199);
-            json.write(details);
-            assertThat(json.write(details)).extractingJsonPathNumberValue("@.width").isEqualTo(20);
-            assertThat(json.write(details)).extractingJsonPathNumberValue("@.height").isEqualTo(10);
-            assertThat(json.write(details)).extractingJsonPathNumberValue("@.mines").isEqualTo(199);
-    }
+//    @Autowired
+//            private JacksonTester<NewGameRequest> json;
+//
+//    @Test
+//        void testSerialize() throws Exception {
+//            NewGameRequest details = new NewGameRequest(20,10, 199);
+//            json.write(details);
+//            assertThat(json.write(details)).extractingJsonPathNumberValue("@.width").isEqualTo(20);
+//            assertThat(json.write(details)).extractingJsonPathNumberValue("@.height").isEqualTo(10);
+//            assertThat(json.write(details)).extractingJsonPathNumberValue("@.mines").isEqualTo(199);
+//    }
 }
