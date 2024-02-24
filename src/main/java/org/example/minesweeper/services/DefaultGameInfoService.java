@@ -6,6 +6,7 @@ import org.example.minesweeper.dto.GameInfoData;
 import org.example.minesweeper.repositories.GameInfoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 @Service("gameInfoService")
@@ -23,17 +24,18 @@ public class DefaultGameInfoService implements GameInfoService {
         gameInfoResponse.setWidth(gameInfoData.getWidth());
         gameInfoResponse.setHeight(gameInfoData.getHeight());
         gameInfoResponse.setMines_count(gameInfoData.getMines_count());
+        gameInfoResponse.setField(Arrays.toString(gameInfoData.getField()));
         gameInfoResponse.setCompleted(gameInfoData.isCompleted());
         gameInfoResponse.setGame_id(uuid);
         gameInfoResponse = gameInfoRepository.save(gameInfoResponse);
         gameInfoData.setGame_id(gameInfoResponse.getGame_id());
     }
 
+
     @Override
     public GameInfoData getGameInfo(String game_id) {
         return gameInfoRepository.findById(Long.valueOf(game_id))
                 .map(gameInfoResponse -> {
-                    // Создание объекта GameInfoData из объекта GameInfoResponse и объекта NewGameRequest
                     GameInfoData gameInfoData = new GameInfoData();
                     gameInfoData.setGame_id(gameInfoResponse.getGame_id());
                     gameInfoData.setWidth(gameInfoResponse.getWidth());
@@ -53,4 +55,5 @@ public class DefaultGameInfoService implements GameInfoService {
         }
         return false;
     }
+
 }

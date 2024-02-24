@@ -41,6 +41,7 @@ public class FirsController {
         gameInfoData.setMines_count(mines);
         gameInfoData.setWidth(width);
         gameInfoData.setHeight(height);
+        gameInfoData.setField(new String[height][width]);
         gameInfoService.saveGameInfo(gameInfoData);
         return new ResponseEntity<>(gameInfoData, HttpStatus.CREATED);
     }

@@ -1,4 +1,7 @@
 package org.example.minesweeper.createTable;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -18,6 +21,9 @@ public class GameInfoResponse {
     private int height;
     @Column
     private int mines_count;
+    @Column(columnDefinition = "LONGTEXT")
+    private String field;
+
     @Column
     private boolean completed;
 
@@ -51,6 +57,13 @@ public class GameInfoResponse {
 
     public void setMines_count(int mines_count) {
         this.mines_count = mines_count;
+    }
+
+    public String getField() {
+        return field;
+    }
+    public void setField(String field) {
+        this.field = field;
     }
 
     public boolean isCompleted() {
