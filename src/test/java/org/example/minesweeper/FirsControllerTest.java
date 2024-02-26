@@ -17,9 +17,6 @@ public class FirsControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    @MockBean
-    private DefaultGameInfoService gameInfoService;
-
     private ObjectMapper objectMapper;
     @BeforeEach
     void setUp() {
