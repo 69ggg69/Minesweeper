@@ -1,47 +1,61 @@
 package org.example.minesweeper.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class GameInfoData {
     private String game_id;
+    @JsonCreator // This annotation is not needed if you're using a no-argument constructor
+    public GameInfoData(@JsonProperty("game_id") String game_id) {
+    this.game_id = game_id;
+}
     private int width;
     private int height;
     private int mines_count;
     @JsonIgnore
     private String fieldString;
-    private boolean completed;
-    public String[][] getField() {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            String[][] fieldArray = objectMapper.readValue(fieldString, String[][].class);
-            for (int i = 0; i < fieldArray.length; i++) {
-                for (int j = 0; j < fieldArray[i].length; j++) {
-                    if (fieldArray[i][j] == null) {
-                        fieldArray[i][j] = " ";
-                    }
-                }
-            }
-            return fieldArray;
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return new String[0][0];
-        }
+
+    public GameInfoData() {
+
     }
 
+    public String[][] getField() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+        try {
+            if (fieldString == null) {
+                return new String[height][width];
+            }
+            return objectMapper.readValue(this.fieldString, String[][].class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Error while deserializing field data", e);
+        }
+    }
 
     public void setField(String[][] field) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+            for (String[] row : field) {
+                for (int i = 0; i < row.length; i++) {
+                    if (row[i] == null) {
+                        row[i] = " ";
+                    }
+                }
+            }
+
             fieldString = objectMapper.writeValueAsString(field);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-    }
 
+    }
+    private boolean completed;
 
     public String getGame_id() {
         return game_id;

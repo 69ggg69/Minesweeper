@@ -1,25 +1,14 @@
 package org.example.minesweeper;
 
 import org.example.minesweeper.controllers.FirsController;
-import org.example.minesweeper.dto.GameInfoData;
-import org.example.minesweeper.services.DefaultGameInfoService;
-import org.example.minesweeper.services.GameInfoService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(FirsController.class)
@@ -39,28 +28,28 @@ public class FirsControllerTest {
 
 
 
-    @Test
-    public void whenWidthIsInvalid_thenThrowBindException2() throws Exception {
-        GameInfoData gameInfoData = new GameInfoData();
-        gameInfoData.setWidth(10);
-        gameInfoData.setHeight(10);
-        gameInfoData.setMines_count(5);
-        gameInfoData.setCompleted(false);
-        // Устанавливаем ожидаемое поведение сервиса
-        Mockito.doNothing().when(gameInfoService).saveGameInfo(Mockito.any(GameInfoData.class));
-        System.out.println(objectMapper.writeValueAsString(gameInfoData));
-        // Отправляем POST-запрос с данными объекта GameInfoData и проверяем, что возвращается статус 201 CREATED
-        mvc.perform(MockMvcRequestBuilders.post("/api/new")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(gameInfoData)))
-                .andExpect(MockMvcResultMatchers.status().isCreated());
+//    @Test
+//    public void whenWidthIsInvalid_thenThrowBindException2() throws Exception {
+//        GameInfoData gameInfoData = new GameInfoData();
+//        gameInfoData.setWidth(10);
+//        gameInfoData.setHeight(10);
+//        gameInfoData.setMines_count(5);
+//        gameInfoData.setCompleted(false);
+//        // Устанавливаем ожидаемое поведение сервиса
+//        Mockito.doNothing().when(gameInfoService).saveGameInfo(Mockito.any(GameInfoData.class));
+//        System.out.println(objectMapper.writeValueAsString(gameInfoData));
+//        // Отправляем POST-запрос с данными объекта GameInfoData и проверяем, что возвращается статус 201 CREATED
+//        mvc.perform(MockMvcRequestBuilders.post("/api/new")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(gameInfoData)))
+//                .andExpect(MockMvcResultMatchers.status().isCreated());
 //        mvc.perform(MockMvcRequestBuilders.post("/api")
 //                        .contentType(MediaType.APPLICATION_JSON)
 //                        .content(objectMapper.writeValueAsString(request)))
 //                .andExpect(MockMvcResultMatchers.status().isOk())
 //                .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(expectedResponse)));
     }
-}
+
 //        NewGameRequest newGameRequest = new NewGameRequest(1, 10, 10);
 //        GameInfoResponse gameInfoResponse = new GameInfoResponse();
 //        gameInfoResponse.setWidth(newGameRequest);

@@ -10,11 +10,8 @@ import java.util.UUID;
 @Table(name = "game_info")
 public class GameInfoResponse {
     @Id
+    @Column
     private String game_id;
-
-    public GameInfoResponse() {
-
-    }
     @Column
     private int width;
     @Column
@@ -23,7 +20,6 @@ public class GameInfoResponse {
     private int mines_count;
     @Column(columnDefinition = "LONGTEXT")
     private String field;
-
     @Column
     private boolean completed;
 
