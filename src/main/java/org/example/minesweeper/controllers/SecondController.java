@@ -1,7 +1,6 @@
 package org.example.minesweeper.controllers;
 
 import org.example.minesweeper.GameTurnRequest;
-import org.example.minesweeper.createTable.GameInfoResponse;
 import org.example.minesweeper.dto.GameInfoData;
 import org.example.minesweeper.services.MinesweeperService;
 import org.springframework.http.ResponseEntity;

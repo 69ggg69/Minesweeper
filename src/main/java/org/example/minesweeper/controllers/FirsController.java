@@ -1,22 +1,13 @@
 package org.example.minesweeper.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.HttpServletResponse;
-import org.example.minesweeper.createTable.GameInfoResponse;
 import org.example.minesweeper.dto.GameInfoData;
-import org.example.minesweeper.repositories.GameInfoRepository;
 import org.example.minesweeper.services.MinesweeperService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.net.BindException;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import java.util.UUID;
-
 
 @RestController
 @RequestMapping

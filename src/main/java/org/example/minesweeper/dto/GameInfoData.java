@@ -7,10 +7,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class GameInfoData {
     private String game_id;
-    @JsonCreator // This annotation is not needed if you're using a no-argument constructor
+    @JsonCreator
     public GameInfoData(@JsonProperty("game_id") String game_id) {
     this.game_id = game_id;
 }
@@ -53,8 +54,8 @@ public class GameInfoData {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
     }
+
     private boolean completed;
 
     public String getGame_id() {
